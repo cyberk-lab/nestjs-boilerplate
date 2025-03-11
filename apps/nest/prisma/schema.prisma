@@ -55,22 +55,6 @@ enum Role {
   SUPERADMIN
 }
 
-model Profile {
-  id BigInt @id @default(autoincrement())
-
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  dob       DateTime?
-
-  name   String
-  avatar String?
-  email  String?
-
-  // relations
-  users User[]
-  todos Todo[]
-}
-
 enum TodoStatus {
   TODO
   IN_PROGRESS
@@ -90,3 +74,84 @@ model Todo {
   profileId BigInt
   profile   Profile @relation(fields: [profileId], references: [id])
 }
+
+model Profile {
+  id BigInt @id @default(autoincrement())
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  dob       DateTime?
+
+  name   String
+  avatar String?
+  email  String?
+
+  // relations
+  users User[]
+  todos Todo[]
+  myComments Comment[]
+  myLikes Like[]
+
+  myPosts Post[]
+}
+
+enum TableType {
+  POST
+  COMMENT
+}
+
+model Post {
+  id BigInt @id @default(autoincrement())
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  content String
+
+  creatorId BigInt
+  creator   Profile @relation(fields: [creatorId], references: [id])
+
+  comments Comment[]
+  likes Like[]
+}
+
+model Comment {
+  id BigInt @id @default(autoincrement())
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  content String
+
+  postId BigInt
+  post   Post @relation(fields: [postId], references: [id])
+
+  parentId BigInt?
+  parent   Comment? @relation("Replies", fields: [parentId], references: [id])
+
+  creatorId BigInt
+  creator   Profile @relation(fields: [creatorId], references: [id])
+
+  replies Comment[] @relation("Replies")
+
+  likes Like[]
+}
+
+model Like {
+  @@id([type, targetId, creatorId])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  type TableType
+  targetId BigInt 
+  creatorId BigInt
+
+  postId BigInt?
+  commentId BigInt?
+
+  // relations
+  creator   Profile @relation(fields: [creatorId], references: [id])
+  post   Post? @relation(fields: [postId], references: [id])
+  comment   Comment? @relation(fields: [commentId], references: [id])
+}
+
