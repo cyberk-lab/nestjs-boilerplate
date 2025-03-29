@@ -48,12 +48,11 @@ export async function setupSwaggerUI(app: INestApplication, options?: { route?: 
 }
 
 export async function bootstrapServerless(modular, routePrefix = ''): Promise<Handler> {
-  // console.log('bootstrapServerless start', pingDb, new Date().toISOString())
   app = await NestFactory.create(modular, {
     logger: [
       'error',
       'warn',
-      // 'debug',
+      'debug',
       // 'verbose'
     ],
     cors: true,

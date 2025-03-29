@@ -8,13 +8,13 @@ export class TokenResDto {
   @IsString()
   @IsNotEmpty()
   @Expose()
-  @ApiProperty({ example: 'jwt token', type: () => String })
+  @ApiProperty({ example: 'jwt token' })
   readonly jwt: string
 
   @IsString()
   @IsNotEmpty()
   @Expose()
-  @ApiProperty({ example: 'refresh token', type: () => String })
+  @ApiProperty({ example: 'refresh token' })
   readonly jwtRefresh: string
 
   @IsNotEmptyObject()

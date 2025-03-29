@@ -48,14 +48,6 @@ export class AuthController {
   @ApiOkResponse({ type: TokenResDto })
   @Get('local/confirm')
   confirmMail(@Req() req: Request, @Query() dto: ConfirmDto) {
-    // console.log({
-    //   url: req.url,
-    //   query: req.query,
-    //   baseUrl: req.baseUrl,
-    //   originalUrl: req.originalUrl,
-    //   headers: req.headers,
-    //   hostname: req.hostname,
-    // })
     return this.authService.confirm(req, dto)
   }
 

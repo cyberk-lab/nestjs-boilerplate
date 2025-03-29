@@ -1,5 +1,5 @@
 import { ph } from '@app/helper/prisma.helper'
-import KeyvRedis from '@keyv/redis'
+import { createKeyv } from '@keyv/redis'
 import { CacheModule } from '@nestjs/cache-manager'
 import { Module } from '@nestjs/common'
 import { PrismaModule } from 'nestjs-prisma'
@@ -10,7 +10,8 @@ import { PrismaModule } from 'nestjs-prisma'
       isGlobal: true,
       useFactory: async () => {
         return {
-          store: new KeyvRedis(process.env.REDIS_URL),
+          stores: [createKeyv(process.env.REDIS_URL)],
+          ttl: 30 * 1000, // default TTL 30 seconds
         }
       },
     }),

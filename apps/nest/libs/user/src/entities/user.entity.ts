@@ -1,4 +1,3 @@
-import { PaginatedRequestDto } from '@app/core/dtos/pagination.dto'
 import { ApiProperty } from '@nestjs/swagger'
 import { Role, User, UserProvider } from '@prisma/client'
 import { Exclude, Expose } from 'class-transformer'

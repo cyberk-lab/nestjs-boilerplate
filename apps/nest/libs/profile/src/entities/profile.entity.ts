@@ -33,7 +33,6 @@ export class ProfileEntity implements Profile {
   name: string
 
   @Expose()
-  @IsEmail()
   @ApiProperty({ example: 'Harry@gmail.com', type: () => String, nullable: true })
   email: string | null
 

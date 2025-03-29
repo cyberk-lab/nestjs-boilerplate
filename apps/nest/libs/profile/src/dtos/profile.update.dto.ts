@@ -1,5 +1,17 @@
-import { PartialType, PickType } from '@nestjs/swagger'
-import { ProfileEntity } from '../entities/profile.entity'
+import { ApiPropertyOptional } from '@nestjs/swagger'
+import { Expose } from 'class-transformer'
+import { IsDate, IsDateString, IsOptional, IsString } from 'class-validator'
 
-export class _UpdateProfileDto extends PickType(ProfileEntity, ['email', 'avatar', 'name', 'dob']) {}
-export class ProfileUpdateDto extends PartialType(_UpdateProfileDto) {}
+export class ProfileUpdateDto {
+  @ApiPropertyOptional({ example: 'Harry' })
+  @Expose()
+  @IsOptional()
+  @IsString()
+  name: string
+
+  @ApiPropertyOptional({ example: '2025-01-01', type: Date })
+  @Expose()
+  @IsOptional()
+  @IsDateString()
+  dob: Date
+}

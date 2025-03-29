@@ -1,6 +1,6 @@
 import JB from 'json-bigint'
 
-const { stringify } = JB({ useNativeBigInt: true })
+const { stringify, parse } = JB({ useNativeBigInt: true })
 
 JSON.stringify = stringify
 // JSON.parse = parse

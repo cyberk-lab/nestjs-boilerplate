@@ -1,8 +1,8 @@
 import { IsIncludeOnlyKeys, IsIncludeOnlyValues } from '@app/helper/class.validator'
 import { ApiPropertyOptional } from '@nestjs/swagger'
 import { Prisma } from '@prisma/client'
-import { Expose, Transform, Type } from 'class-transformer'
-import { IsOptional, IsJSON, IsNumber, IsObject, ValidateNested, IsArray } from 'class-validator'
+import { Expose, Type } from 'class-transformer'
+import { IsOptional, IsNumber, IsObject, IsArray } from 'class-validator'
 
 const TodoFields = Object.values(Prisma.TodoScalarFieldEnum)
 

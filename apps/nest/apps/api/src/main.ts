@@ -3,6 +3,7 @@ import { ApiModule } from './api.module'
 import { bootstrapServerless, setupNestApp, setupSwaggerUI } from '@app/core/setup-nest-app'
 import { Handler } from 'express'
 import type { Context } from 'aws-lambda'
+import { promiseHelper } from '@app/helper/promise.helper'
 
 const localDev = process.env.LOCAL_DEV === 'true'
 
@@ -21,7 +22,17 @@ if (localDev) {
 let server: Handler
 
 export const handler = async (event: any, context: Context, callback) => {
+  const serverInited = !!server
   server = server ?? (await bootstrapServerless(ApiModule, 'api'))
-
-  return server(event, context as any, callback) as any
+  if (event.Warmup) {
+    console.log('Warmup event')
+    if (serverInited) {
+      // small delay to invoke all concurrency lambdas
+      await promiseHelper.delay(30)
+    }
+    return true
+  } else {
+    console.log('path=', event?.rawPath)
+    return server(event, context as any, callback) as any
+  }
 }

@@ -32,11 +32,11 @@ export class UserController {
     return this._userService.changeRole(id, 'USER')
   }
 
-  @ApiBearerAuth()
-  @ApiOkResponse({ type: UserEntity, isArray: true })
-  @Get()
-  @UseGuards(JwtGuard)
-  findAll(@Query() query) {
-    return this._userService.findAll(query)
-  }
+  // @ApiBearerAuth()
+  // @ApiOkResponse({ type: UserEntity, isArray: true })
+  // @Get()
+  // @UseGuards(JwtGuard)
+  // findAll(@Query() query) {
+  //   return this._userService.findAll(query)
+  // }
 }

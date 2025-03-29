@@ -50,13 +50,12 @@ describe('Profile', () => {
   })
   test('Put:Success', async () => {
     let res = await userContext.request((t) => t.put('/profile/me').send({ name: 'something' }))
+    expect(res).toBeOK()
     expect(res.body.name).toEqual('something')
-
-    res = await userContext.request((t) => t.put('/profile/me').send({ avatar: 'something' }))
-    expect(res.body.avatar).toEqual('something')
 
     const dob = new Date()
     res = await userContext.request((t) => t.put('/profile/me').send({ dob: dob }))
+    expect(res).toBeOK()
     expect(res.body.dob).toEqual(dob.toISOString())
   })
 })

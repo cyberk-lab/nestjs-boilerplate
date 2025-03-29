@@ -1,12 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { Expose } from 'class-transformer'
+import { Expose, Transform } from 'class-transformer'
 import { IsEmail, IsNotEmpty, IsString, MinLength } from 'class-validator'
+import { normalizeEmail } from 'validator'
 
 export class RegisterDto {
   @Expose()
-  @ApiProperty({ example: 'user1@gmail.com', required: true, type: () => String })
-  @IsString()
+  @ApiProperty({ example: 'user1@gmail.com', required: true, description: 'Currently only support email' })
   @IsEmail()
+  @Transform(({ value }) => normalizeEmail(value))
   @IsNotEmpty()
   readonly username: string
 
@@ -16,12 +17,4 @@ export class RegisterDto {
   @MinLength(6)
   @IsNotEmpty()
   readonly password: string
-
-  // @IsString()
-  // @IsOptional()
-  // readonly confirmationHash: string
-
-  // @IsString()
-  // @IsOptional()
-  // readonly provider: UserProvider
 }
